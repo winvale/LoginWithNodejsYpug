@@ -4,7 +4,9 @@
   "description": "proyecto en node Js con plantillas pug login y autenticacion",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./index.js",
+    "server": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -22,5 +24,11 @@
   "bugs": {
     "url": "https://github.com/winvale/LoginWithNodejsYpug/issues"
   },
-  "homepage": "https://github.com/winvale/LoginWithNodejsYpug#readme"
+  "homepage": "https://github.com/winvale/LoginWithNodejsYpug#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
 }
