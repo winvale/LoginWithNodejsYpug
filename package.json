@@ -2,9 +2,8 @@
   "name": "loginwhitnodejsypug",
   "version": "1.0.0",
   "description": "proyecto en node Js con plantillas pug login y autenticacion",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./index.js",
     "server": "nodemon index.js"
   },
