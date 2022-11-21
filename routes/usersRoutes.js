@@ -1,13 +1,11 @@
 import express from "express";
+import { formularioLogin } from "../controllers/userController.js";
 
 const router = express.Router();
 
 //Routing
-router.get("/", (req, res) => {
-  res.json({ msg: "prueba" });
-});
-router.get("/home", (req, res) => {
-  res.json({ msg: "home" });
+router.get("/login", (req, res) => {
+  res.render("auth/login");
 });
 
 export default router;
