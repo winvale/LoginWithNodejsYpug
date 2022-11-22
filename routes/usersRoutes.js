@@ -3,6 +3,7 @@ import {
   formularioLogin,
   formularioRegistro,
   formularioOlvidePassword,
+  registrar,
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -10,6 +11,7 @@ const router = express.Router();
 //Routing
 router.get("/login", formularioLogin);
 router.get("/registro", formularioRegistro);
+router.post("/registro", registrar);
 router.get("/olvide-password", formularioOlvidePassword);
 
 export default router;
