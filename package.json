@@ -28,7 +28,9 @@
   "homepage": "https://github.com/winvale/LoginWithNodejsYpug#readme",
   "dependencies": {
     "express": "^4.18.2",
-    "pug": "^3.0.2"
+    "mysql2": "^2.3.3",
+    "pug": "^3.0.2",
+    "sequelize": "^6.25.7"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
