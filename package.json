@@ -2,13 +2,12 @@
   "name": "loginwhitnodejsypug",
   "version": "1.0.0",
   "description": "proyecto en node Js con plantillas pug login y autenticacion con tailwindcss",
-  "main": "index.js",  
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "node ./index.js",
     "server": "nodemon index.js",
     "css": "postcss public/css/tailwind.css -o public/css/app.css --watch"
-    
   },
   "repository": {
     "type": "git",

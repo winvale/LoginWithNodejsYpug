@@ -24,5 +24,10 @@ block contenido
                     div     
                         label.block.text-sm-uppercase.text-gray-600.font-bold(for="Repetir_Password") Repetir Password
                         input#Repetir_Password.w-full.px-3.py-2.border.border-gray-400.rounded-md.placeholder-gray-300(placeholder="Repetir Passwordil" type="RPassword" name="EmaRepetir_Passwordil")    
+                    
+                    
+                    input(class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer" type="submit" value="Crear Cuenta")    
 
-                    input(class="w-full bg-indigo-600 hover:bg-indigo-700" type="submit" value="Crear Cuenta")    
+                    div.flex.item-center.justify-between
+                        a.text-gray-500.text-xs(href="/auth/login") ¿Quiere inicar sesion? Iniciar
+                        a.text-gray-500.text-xs(href="/auth/olvide-password")  Olvide mi contraseña
