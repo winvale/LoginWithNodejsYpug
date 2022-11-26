@@ -9,6 +9,7 @@ const app = express();
 
 try {
   await db.authenticate();
+  db.sync();
   console.log("conexion establecida");
 } catch (error) {
   console.log(error);
@@ -18,6 +19,9 @@ try {
 app.set("view engine", "pug");
 app.set("views", "./views");
 
+//habilitar lectura de datos del formulario
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 //carpeta publica
 
 app.use(express.static("public"));

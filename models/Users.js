@@ -1,20 +1,22 @@
-import sequelize, { DataType } from "sequelize";
+import { DataTypes } from "sequelize";
+import db from "../config/db.js";
 
 const Users = db.define("usuarios", {
   nombre: {
-    type: DataType.STRING,
-    allowNull: false,
+    type: DataTypes.STRING,
+    allowNull: true,
   },
   email: {
-    type: DataType.STRING,
-    allowNull: false,
+    type: DataTypes.STRING,
+    allowNull: true,
   },
   password: {
-    type: DataType.STRING,
-    allowNull: false,
+    type: DataTypes.STRING,
+    allowNull: true,
   },
-  token: DataType.STRING,
-  confirmado: DataType.BOOLEAN,
+
+  token: DataTypes.STRING,
+  confirmado: DataTypes.BOOLEAN,
 });
 
 export default Users;
