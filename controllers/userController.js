@@ -32,14 +32,15 @@ const registrar = async (req, res) => {
   //.withMessage("No coicide la contraseña ")
   //.run(req);
 
-  check("repetir_Password").custom((value, { req }) => {
-    if (value !== req.body.password) {
-      console.log("noooooooo");
-      console.log(req.body.password, req.body.repetir_Password);
-      throw new Error("No coicide la contraseña");
-    }
-    return Error;
-  });
+  await check("repetir_Password")
+    .custom((value, { req }) => {
+      if (value === req.body.password) {
+        return true;
+      }
+      return false;
+    })
+    .withMessage("Las contraseñas no coinciden.")
+    .run(req);
 
   let resultado = validationResult(req);
 
@@ -57,9 +58,32 @@ const registrar = async (req, res) => {
     });
   }
 
-  const usuario = await Users.create(req.body);
-  res.json(usuario);
+  //extraer datos
+
+  const { nombre, email, password } = req.body;
+  //verificar que usuario si existe
+  const existeUsuario = await Users.findOne({
+    where: { email },
+  });
+  return res.render("auth/registro", {
+    pagina: "Crear Cuenta",
+    errores: [{ msg: "El usuario ya esta registrado con el correo " }],
+    usuario: {
+      nombre: req.body.nombre,
+      email: req.body.email,
+    },
+  });
+  //const usuario = await Users.create(req.body);
+  //res.json(usuario);
   //res.json(resultado.array());
+
+  // almacenar un usuario
+  await Users.create({
+    nombre,
+    email,
+    password,
+    token: 123,
+  });
 };
 
 const formularioOlvidePassword = (req, res) => {
