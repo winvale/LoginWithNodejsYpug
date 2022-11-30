@@ -30,7 +30,7 @@ app.use("/auth", usersRoutes);
 
 //definir puerto para arrancar
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
   console.log(`el servidor por el puerto ${port}`);

@@ -1,6 +1,7 @@
 import { check, validationResult } from "express-validator";
 import Users from "../models/Users.js";
 import { generarId } from "../helpers/tokens.js";
+import { emailRegistro } from "../helpers/email.js";
 
 const formularioLogin = (req, res) => {
   res.render("auth/login", {
@@ -81,11 +82,18 @@ const registrar = async (req, res) => {
   //res.json(resultado.array());
 
   // almacenar un usuario
-  await Users.create({
+  const usuario = await Users.create({
     nombre,
     email,
     password,
     token: generarId(),
+  });
+
+  //envia mail de confirmacion
+  emailRegistro({
+    nombre: usuario.nombre,
+    email: usuario.email,
+    token: usuario.token,
   });
 
   // mostrar mensaje de confirmacion
@@ -95,6 +103,11 @@ const registrar = async (req, res) => {
   });
 };
 
+// funcion que comprueba la cuenta confirmar
+const confirmar = (req, res) => {
+  const { token } = req.params;
+  console.log(token);
+};
 const formularioOlvidePassword = (req, res) => {
   res.render("auth/olvide-password", {
     pagina: "Recuperar Contraseña",
@@ -105,5 +118,6 @@ export {
   formularioLogin,
   formularioRegistro,
   formularioOlvidePassword,
+  confirmar,
   registrar,
 };
