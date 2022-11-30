@@ -66,14 +66,16 @@ const registrar = async (req, res) => {
   const existeUsuario = await Users.findOne({
     where: { email },
   });
-  return res.render("auth/registro", {
-    pagina: "Crear Cuenta",
-    errores: [{ msg: "El usuario ya esta registrado con el correo " }],
-    usuario: {
-      nombre: req.body.nombre,
-      email: req.body.email,
-    },
-  });
+  if (existeUsuario) {
+    return res.render("auth/registro", {
+      pagina: "Crear Cuenta",
+      errores: [{ msg: "El usuario ya esta registrado con el correo " }],
+      usuario: {
+        nombre: req.body.nombre,
+        email: req.body.email,
+      },
+    });
+  }
   //const usuario = await Users.create(req.body);
   //res.json(usuario);
   //res.json(resultado.array());
@@ -84,6 +86,12 @@ const registrar = async (req, res) => {
     email,
     password,
     token: generarId(),
+  });
+
+  // mostrar mensaje de confirmacion
+  res.render("templates/mensajes", {
+    pagina: "Cuenta Creada Correctamente ",
+    mensajes: "Hemos enviado un Email de confirmacion, presiona el enlace",
   });
 };
 
