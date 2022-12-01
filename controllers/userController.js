@@ -10,6 +10,7 @@ const formularioLogin = (req, res) => {
 };
 
 const formularioRegistro = (req, res) => {
+  console.log(req.csrfToken());
   res.render("auth/registro", {
     pagina: "Crear Cuenta",
   });
@@ -63,6 +64,7 @@ const registrar = async (req, res) => {
   //extraer datos
 
   const { nombre, email, password } = req.body;
+
   //verificar que usuario si existe
   const existeUsuario = await Users.findOne({
     where: { email },
