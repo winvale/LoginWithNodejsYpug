@@ -13,6 +13,9 @@ const formularioRegistro = (req, res) => {
   console.log(req.csrfToken());
   res.render("auth/registro", {
     pagina: "Crear Cuenta",
+    csrfToken: req.csrfToken(),
+
+    // csrfToken: req.csrfToken(),
   });
 };
 
@@ -31,7 +34,7 @@ const registrar = async (req, res) => {
     .run(req);
 
   // await check("password")
-  // .equals("repetir_Password")
+  //.equals("repetir_Password")
   //.withMessage("No coicide la contraseña ")
   //.run(req);
 
@@ -48,11 +51,12 @@ const registrar = async (req, res) => {
   let resultado = validationResult(req);
 
   //return res.json(resultado.array());
-  // verificar que el resultadoeste vacio
 
+  // verificar que el resultado este vacio
   if (!resultado.isEmpty()) {
     return res.render("auth/registro", {
       pagina: "Crear Cuenta",
+      csrfToken: req.csrfToken(),
       errores: resultado.array(),
       usuario: {
         nombre: req.body.nombre,
@@ -72,6 +76,7 @@ const registrar = async (req, res) => {
   if (existeUsuario) {
     return res.render("auth/registro", {
       pagina: "Crear Cuenta",
+      csrfToken: req.csrfToken(),
       errores: [{ msg: "El usuario ya esta registrado con el correo " }],
       usuario: {
         nombre: req.body.nombre,
@@ -134,9 +139,29 @@ const confirmar = async (req, res, next) => {
 };
 
 const formularioOlvidePassword = (req, res) => {
+  console.log("holaaa");
   res.render("auth/olvide-password", {
     pagina: "Recuperar Contraseña",
+    csrfToken: req.csrfToken(),
   });
+};
+
+const resetPassword = async (req, res) => {
+  await check("email").isEmail().withMessage("No es un correo valido").run(req);
+
+  let resultado = validationResult(req);
+
+  // verificar que el resultado este vacio
+  if (!resultado.isEmpty()) {
+    return res.render("auth/olvide-password", {
+      pagina: "Recuperar tu acceso",
+      csrfToken: req.csrfToken(),
+    });
+  }
+  //Buscar Usuario
+  const { email } = req.body;
+  const usuario = await Users.findOne({ where: { email } });
+  console.log(usuario);
 };
 
 export {
@@ -145,4 +170,5 @@ export {
   formularioOlvidePassword,
   confirmar,
   registrar,
+  resetPassword,
 };

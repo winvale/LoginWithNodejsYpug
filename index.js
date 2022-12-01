@@ -1,9 +1,8 @@
 import express from "express";
+import csrf from "csurf";
+import cookieParser from "cookie-parser";
 import usersRoutes from "./routes/usersRoutes.js";
 import db from "./config/db.js";
-
-import csurf from "csurf";
-import cookieParser from "cookie-parser";
 
 // crear app
 const app = express();
@@ -11,8 +10,9 @@ const app = express();
 //habilitar cookis parser
 app.use(cookieParser());
 
+let csrfProtection = csrf({ cookie: true });
 //habilitar CSRF
-app.use(csurf({ cookie: true }));
+//app.use(csrf({ cookie: true }));
 
 //conexion db
 
@@ -35,7 +35,7 @@ app.use(express.json());
 
 app.use(express.static("public"));
 //Routing
-app.use("/auth", usersRoutes);
+app.use("/auth", csrfProtection, usersRoutes);
 
 //definir puerto para arrancar
 
