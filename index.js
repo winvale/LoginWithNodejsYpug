@@ -2,8 +2,17 @@ import express from "express";
 import usersRoutes from "./routes/usersRoutes.js";
 import db from "./config/db.js";
 
+import csurf from "csurf";
+import cookieParser from "cookie-parser";
+
 // crear app
 const app = express();
+
+//habilitar cookis parser
+app.use(cookieParser());
+
+//habilitar CSRF
+app.use(csurf({ cookie: true }));
 
 //conexion db
 

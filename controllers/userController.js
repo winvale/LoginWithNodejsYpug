@@ -102,12 +102,35 @@ const registrar = async (req, res) => {
     mensajes: "Hemos enviado un Email de confirmacion, presiona el enlace",
   });
 };
-
-// funcion que comprueba la cuenta confirmar
-const confirmar = (req, res) => {
+//confirmar cuenta
+const confirmar = async (req, res, next) => {
   const { token } = req.params;
-  console.log(token);
+
+  //verificar si tk es valido
+  const usuario = await Users.findOne({ where: { token } });
+
+  if (!usuario) {
+    return res.render("auth/confirmar-cuenta", {
+      pagina: "Error al confirmar cuenta ",
+      mensajes: "Hubo un error , intenta de nuevo",
+      error: true,
+    });
+  }
+
+  //confimar cuenta
+  usuario.token = null;
+  usuario.confirmado = true;
+  await usuario.save();
+
+  res.render("auth/confirmar-cuenta", {
+    pagina: "Cuenta confirmanda ",
+    mensajes: "Tu cuenta se confirmo exitosamente",
+  });
+
+  console.log(usuario);
+  next();
 };
+
 const formularioOlvidePassword = (req, res) => {
   res.render("auth/olvide-password", {
     pagina: "Recuperar Contraseña",
