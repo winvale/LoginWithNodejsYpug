@@ -6,6 +6,8 @@ import {
   confirmar,
   registrar,
   resetPassword,
+  comprobarToken,
+  nuevoPassword,
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -21,5 +23,9 @@ router.get("/confirmar/:token", confirmar);
 router.get("/olvide-password", formularioOlvidePassword);
 
 router.post("/olvide-password", resetPassword);
+
+//almacena el nuevo password
+router.get("/olvide-password/:token", comprobarToken);
+router.post("/olvide-password/:token", nuevoPassword);
 
 export default router;

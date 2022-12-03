@@ -1,7 +1,7 @@
 import { check, validationResult } from "express-validator";
 import Users from "../models/Users.js";
 import { generarId } from "../helpers/tokens.js";
-import { emailRegistro } from "../helpers/email.js";
+import { emailRegistro, emailOlvidePassword } from "../helpers/email.js";
 
 const formularioLogin = (req, res) => {
   res.render("auth/login", {
@@ -139,7 +139,6 @@ const confirmar = async (req, res, next) => {
 };
 
 const formularioOlvidePassword = (req, res) => {
-  console.log("holaaa");
   res.render("auth/olvide-password", {
     pagina: "Recuperar Contraseña",
     csrfToken: req.csrfToken(),
@@ -154,14 +153,46 @@ const resetPassword = async (req, res) => {
   // verificar que el resultado este vacio
   if (!resultado.isEmpty()) {
     return res.render("auth/olvide-password", {
-      pagina: "Recuperar tu acceso",
+      pagina: "Recuperar Contraseña",
       csrfToken: req.csrfToken(),
+      errores: resultado.array(),
     });
   }
   //Buscar Usuario
   const { email } = req.body;
   const usuario = await Users.findOne({ where: { email } });
   console.log(usuario);
+
+  if (!usuario) {
+    return res.render("auth/olvide-password", {
+      pagina: "Recuperar Contraseña",
+      csrfToken: req.csrfToken(),
+      errores: [{ msg: "El email no pertenece a ningun usuario registrado" }],
+    });
+  }
+
+  //generar un token y enviar email
+  usuario.token = generarId();
+  await usuario.save();
+
+  //Enviar un email
+  emailOlvidePassword({
+    email: usuario.email,
+    nombre: usuario.nombre,
+    token: usuario.token,
+  });
+  //Rendereizar mensaje
+  res.render("templates/mensajes", {
+    pagina: " Se restablece tu cuenta Correctamente ",
+    mensajes: "Hemos enviado un Email con las instruciones, presiona el enlace",
+  });
+};
+
+const comprobarToken = (req, res, next) => {
+  next();
+};
+const nuevoPassword = (req, res, next) => {
+  next();
 };
 
 export {
@@ -171,4 +202,6 @@ export {
   confirmar,
   registrar,
   resetPassword,
+  comprobarToken,
+  nuevoPassword,
 };
