@@ -43,6 +43,14 @@ const autenticar = async (req, res) => {
   }
 
   // reivisar el password
+  if (!usuario.verificarPassword(password)) {
+    return res.render("auth/login", {
+      pagina: "Iniciar Sesión",
+      csrfToken: req.csrfToken(),
+      errores: [{ msg: "La contraseña es incorrecta" }],
+    });
+  }
+  //autenticar a un usuario
 };
 
 const formularioRegistro = (req, res) => {
