@@ -10,6 +10,7 @@ const formularioLogin = (req, res) => {
     csrfToken: req.csrfToken(),
   });
 };
+
 const autenticar = async (req, res) => {
   await check("email").isEmail().withMessage("Correo es obligatorio").run(req);
 
@@ -40,6 +41,8 @@ const autenticar = async (req, res) => {
       errores: [{ msg: "El usuario no existe" }],
     });
   }
+
+  // reivisar el password
 };
 
 const formularioRegistro = (req, res) => {

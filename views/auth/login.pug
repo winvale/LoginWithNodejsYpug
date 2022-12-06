@@ -10,18 +10,18 @@ block contenido
             div(class="max-w-md mx-auto my-10")
                  each error  in errores
                     p.bg-red-600.text-red.uppercase.text-xs.text-center.p-2.mb-1.font-bold= error.msg
-                    
+
         .mt-8.mx-auto.max-w-md   
             .bg-white.py-8.px-4.shadow
-                form.space-y-5(method="POST" action="/auth/login")
+                form.space-y-5( method="POST" action="/auth/login")
                     input(type="hidden" name="_csrf" value= csrfToken)
                     div     
-                        label.block.text-sm-uppercase.text-gray-600.font-bold(for="Email") Email de registro 
-                        input#Email.w-full.px-3.py-2.border.border-gray-400.rounded-md.placeholder-gray-300(placeholder="Email" type="text" name="Email")
+                        label.block.text-sm-uppercase.text-gray-600.font-bold(for="email") Email de registro 
+                        input#email.w-full.px-3.py-2.border.border-gray-400.rounded-md.placeholder-gray-300(placeholder="Email" type="text" name="email")
 
                     div     
-                        label.block.text-sm-uppercase.text-gray-600.font-bold(for="Password") Password 
-                        input#Password.w-full.px-3.py-2.border.border-gray-400.rounded-md.placeholder-gray-300(placeholder="Password" type="Password" name="Password")
+                        label.block.text-sm-uppercase.text-gray-600.font-bold(for="password") Password 
+                        input#password.w-full.px-3.py-2.border.border-gray-400.rounded-md.placeholder-gray-300(placeholder="Password" type="Password" name="password")
 
                     input(class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer" type="submit" value="Iniciar Sesión")    
 
