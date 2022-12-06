@@ -7,7 +7,39 @@ import { emailRegistro, emailOlvidePassword } from "../helpers/email.js";
 const formularioLogin = (req, res) => {
   res.render("auth/login", {
     pagina: "Iniciar Sesión",
+    csrfToken: req.csrfToken(),
   });
+};
+const autenticar = async (req, res) => {
+  await check("email").isEmail().withMessage("Correo es obligatorio").run(req);
+
+  await check("password")
+    .notEmpty()
+    .withMessage("La contraseña es obligatoria")
+    .run(req);
+
+  let resultado = validationResult(req);
+
+  //return res.json(resultado.array());
+
+  // verificar que el resultado este vacio
+  if (!resultado.isEmpty()) {
+    return res.render("auth/login", {
+      pagina: "Iniciar Sesión",
+      csrfToken: req.csrfToken(),
+      errores: resultado.array(),
+    });
+  }
+  const { email, password } = req.body;
+  // comprobar si el usuario existe
+  const usuario = await Users.findOne({ where: { email } });
+  if (!usuario) {
+    return res.render("auth/login", {
+      pagina: "Iniciar Sesión",
+      csrfToken: req.csrfToken(),
+      errores: [{ msg: "El usuario no existe" }],
+    });
+  }
 };
 
 const formularioRegistro = (req, res) => {
@@ -245,6 +277,7 @@ const nuevoPassword = async (req, res) => {
 };
 export {
   formularioLogin,
+  autenticar,
   formularioRegistro,
   formularioOlvidePassword,
   confirmar,
