@@ -1,5 +1,7 @@
 const admin = (req, res) => {
-  res.send("Mis Propiedades");
+  res.render("propiedades/admin", {
+    pagina: "Fin del proyecto del login",
+  });
 };
 
 export { admin };
