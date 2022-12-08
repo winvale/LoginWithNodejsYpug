@@ -52,11 +52,8 @@ const autenticar = async (req, res) => {
     });
   }
   //autenticar a un usuario
-
   const token = generarJWT({ id: usuario.id, nombre: usuario.nombre });
-
   //almacenar en un cookie
-
   return res
     .cookie("_token", token, {
       htttpOnly: true,
