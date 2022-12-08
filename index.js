@@ -2,6 +2,8 @@ import express from "express";
 import csrf from "csurf";
 import cookieParser from "cookie-parser";
 import usersRoutes from "./routes/usersRoutes.js";
+import propiedadesRoutes from "./routes/propiedadesRoutes.js";
+
 import db from "./config/db.js";
 
 // crear app
@@ -31,11 +33,13 @@ app.set("views", "./views");
 //habilitar lectura de datos del formulario
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-//carpeta publica
 
+//carpeta publica
 app.use(express.static("public"));
+
 //Routing
 app.use("/auth", csrfProtection, usersRoutes);
+app.use("/", propiedadesRoutes, usersRoutes);
 
 //definir puerto para arrancar
 
